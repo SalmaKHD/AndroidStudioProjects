@@ -21,12 +21,25 @@ class PhotoGalleryViewModel: ViewModel() {
         viewModelScope.launch {
             // catch possible errors Flickr may throw
             try {
-                val items = PhotoRepository().fetchPhotos()
-                Log.e(TAG,"items received: $items")
+                val items = fetchGalleryItems("flower")
                 _galleryItems.value = items
             } catch (ex:Exception) {
                 Log.e(TAG, "failed to fetch gallery items", ex)
             }
+        }
+    }
+
+    // update images stream based on the passed query
+    fun setQuery(query: String) {
+        viewModelScope.launch { _galleryItems.value = fetchGalleryItems(query) }
+    }
+
+    // fetch images based on a query
+    private suspend fun fetchGalleryItems(query: String): List<GalleryItem> {
+        return if (query.isNotEmpty()) {
+            photoRepository.searchPhotos(query)
+        } else {
+            photoRepository.fetchPhotos()
         }
     }
 }
