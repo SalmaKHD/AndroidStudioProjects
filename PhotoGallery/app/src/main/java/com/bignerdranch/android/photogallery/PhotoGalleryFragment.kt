@@ -10,7 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bignerdranch.android.photogallery.api.GalleryItem
 import com.bignerdranch.android.photogallery.databinding.FragmentPhotoGalleryBinding
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 private const val TAG = "PhotoGalleryFragment"
@@ -23,6 +25,10 @@ class PhotoGalleryFragment : Fragment() {
 
     // obtain fragment's ViewModel instance
     private val photoGalleryViewModel: PhotoGalleryViewModel by viewModels()
+
+    // get a reference to the SearchView object
+    private var searchView: SearchView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // let the fragment know that it should have an options menu
@@ -36,7 +42,7 @@ class PhotoGalleryFragment : Fragment() {
 
         val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
         // get access to SearchView methods (originally of type MenuItem)
-        val searchView = searchItem.actionView as? SearchView
+        searchView = searchItem.actionView as? SearchView
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // set a listener for when the user submits their string
@@ -51,6 +57,23 @@ class PhotoGalleryFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            // clear the query in the SearchView when the user chooses clear
+            R.id.menu_item_clear -> {
+                photoGalleryViewModel.setQuery("")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu()
+        // set the SearchView object to null
+        searchView = null
     }
 
     override fun onCreateView(
@@ -69,8 +92,11 @@ class PhotoGalleryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                photoGalleryViewModel.galleryItems.collect { items ->
-                    binding.photoGrid.adapter = PhotoListAdapter(items)
+                // use uiState property of ViewModel to access the data the fragment needs
+                // upon the data being changed
+                photoGalleryViewModel.uiState.collect { state ->
+                    binding.photoGrid.adapter = PhotoListAdapter(state.images)
+                    searchView?.setQuery(state.query, false)
                 }
             }
         }
@@ -80,4 +106,5 @@ class PhotoGalleryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
