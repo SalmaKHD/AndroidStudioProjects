@@ -11,3 +11,8 @@ Description: In this version, the app simply fetches interesting photos as selec
 
 ![app-image-v.1](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/PhotoGallery/app-pictures/photo-gallery-v.1.PNG?raw=true)
 
+### v.2
+Description: In this version, the app allows the user to type a query and get relevant images from [Flickr](https://www.flickr.com/).
+
+![app-image-v.1](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/PhotoGallery/app-pictures/photo-gallery-v.2.PNG?raw=true)
+
