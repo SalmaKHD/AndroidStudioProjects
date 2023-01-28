@@ -10,12 +10,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.work.*
 import com.bignerdranch.android.photogallery.api.GalleryItem
 import com.bignerdranch.android.photogallery.databinding.FragmentPhotoGalleryBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 private const val TAG = "PhotoGalleryFragment"
+private const val POLL_WORK = "POLL_WORK"
+
 class PhotoGalleryFragment : Fragment() {
     private var _binding: FragmentPhotoGalleryBinding? = null
     private val binding
@@ -28,12 +32,12 @@ class PhotoGalleryFragment : Fragment() {
 
     // get a reference to the SearchView object
     private var searchView: SearchView? = null
+    private var pollingMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // let the fragment know that it should have an options menu
         setHasOptionsMenu(true)
-
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -43,6 +47,8 @@ class PhotoGalleryFragment : Fragment() {
         val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
         // get access to SearchView methods (originally of type MenuItem)
         searchView = searchItem.actionView as? SearchView
+
+        pollingMenuItem = menu.findItem(R.id.menu_item_toggle_polling)
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // set a listener for when the user submits their string
@@ -66,6 +72,10 @@ class PhotoGalleryFragment : Fragment() {
                 photoGalleryViewModel.setQuery("")
                 true
             }
+            R.id.menu_item_toggle_polling -> {
+                photoGalleryViewModel.toggleIsPolling()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -74,6 +84,7 @@ class PhotoGalleryFragment : Fragment() {
         super.onDestroyOptionsMenu()
         // set the SearchView object to null
         searchView = null
+        pollingMenuItem = null
     }
 
     override fun onCreateView(
@@ -97,8 +108,52 @@ class PhotoGalleryFragment : Fragment() {
                 photoGalleryViewModel.uiState.collect { state ->
                     binding.photoGrid.adapter = PhotoListAdapter(state.images)
                     searchView?.setQuery(state.query, false)
+                        // update polling state when the UI state changes
+                    updatePollingState(state.isPolling)
                 }
             }
+        }
+    }
+
+    private fun updatePollingState(isPolling: Boolean) {
+        // change menu item string when the state of polling changes
+        val toggleItemTitle = if (isPolling) {
+            R.string.stop_polling
+        } else {
+            R.string.start_polling
+        }
+        pollingMenuItem?.setTitle(toggleItemTitle)
+
+        if (isPolling) {
+            // set constraints for the worker (the work will not run if these
+            // constraints are not satisfied
+            val constraints = Constraints.Builder()
+                    // enforce network type
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .build()
+
+            val periodicRequest =
+                // create a periodic work request
+                // 15 -> min value for interval
+                PeriodicWorkRequestBuilder<PollWorker>(15, TimeUnit.MINUTES)
+                        // apply the constraints
+                    .setConstraints(constraints)
+                    .build()
+
+            // get WorkManager instance and register the periodic work with it
+            WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
+                // this string allows the work to be uniquely identified ->
+                // can be used later on to cancel the request
+                POLL_WORK,
+                // this determines what the WorkManger must do if you schedule a new worker
+                // with the same name
+                ExistingPeriodicWorkPolicy.KEEP,
+                periodicRequest
+            )
+        } else {
+            // if polling is set to off, and the worker is running -> cancel it using the worker's
+            // unique id
+            WorkManager.getInstance(requireContext()).cancelUniqueWork(POLL_WORK)
         }
     }
 
