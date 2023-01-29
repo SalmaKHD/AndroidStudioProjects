@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -64,5 +65,8 @@ dependencies {
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
 
 }
