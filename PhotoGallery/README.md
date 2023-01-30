@@ -16,3 +16,15 @@ Description: In this version, the app allows the user to type a query and get re
 
 ![app-image-v.1](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/PhotoGallery/app-pictures/photo-gallery-v.2.PNG?raw=true)
 
+### v.3
+Description: In this version, if there is a new set of photos that can be fetched from [Flickr](https://www.flickr.com/), the app pushes a notification and launches itself upon being pressed.
+
+![app-image-v.1](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/PhotoGallery/app-pictures/photo-gallery-v.3.PNG?raw=true)
+
+### v.4 (Dinal Version)
+Description: In this version, the app allows the user to select an image and visit its original page on [Flickr](https://www.flickr.com/).
+
+![app-image-v.1](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/PhotoGallery/app-pictures/photo-gallery-v.4.PNG?raw=true)
+
+
+
