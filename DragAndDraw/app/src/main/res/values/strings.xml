@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DragAndDraw</string>
+    <string name="viewDescription">canvas that can be filled with rectangles</string>
 </resources>

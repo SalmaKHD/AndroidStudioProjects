@@ -1,9 +1,13 @@
 package com.bignerdranch.draganddraw
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PointF
+import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -18,7 +22,7 @@ class BoxDrawingView(
 
     // keep track of the boxes that are to be created
     private var currentBox: Box? = null
-    private val boxes = mutableListOf<Box>()
+    private val boxesRepository = BoxesRepository.get()
 
     // create two Paint objects
     // responsible for the characteristics of all the shapes drawn on screen
@@ -43,7 +47,7 @@ class BoxDrawingView(
                 // as soon as this event happens, create a new Box instance that will later on be
                 // added to the list of Box objects
                 currentBox = Box(current).also {
-                    boxes.add(it)
+                    boxesRepository.addBox(it)
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -69,9 +73,9 @@ class BoxDrawingView(
     }
 
     override fun onDraw(canvas: Canvas) {
-    // Fill the background
+        // Fill the background
         canvas.drawPaint(backgroundPaint)
-        boxes.forEach { box ->
+        boxesRepository.getBoxes().forEach { box ->
             canvas.drawRect(box.left, box.top, box.right, box.bottom, boxPaint)
         }
     }
@@ -83,6 +87,4 @@ class BoxDrawingView(
             invalidate() // calls onDraw() which draws a box
         }
     }
-
-
 }
