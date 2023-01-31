@@ -14,6 +14,7 @@ class PhotoGalleryViewModel: ViewModel() {
     // use PhotoGalleryUiState to combine StateFlow objects
     private val _uiState: MutableStateFlow<PhotoGalleryUiState> =
         MutableStateFlow(PhotoGalleryUiState())
+
     val uiState: StateFlow<PhotoGalleryUiState>
         get() = _uiState.asStateFlow()
 

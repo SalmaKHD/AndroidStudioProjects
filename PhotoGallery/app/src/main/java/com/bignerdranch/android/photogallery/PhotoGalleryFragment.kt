@@ -100,6 +100,7 @@ class PhotoGalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // use uiState property of ViewModel to access the data the fragment needs
@@ -114,7 +115,6 @@ class PhotoGalleryFragment : Fragment() {
                                 photoPageUri
                             )
                         )
-
                     }
 
                     searchView?.setQuery(state.query, false)

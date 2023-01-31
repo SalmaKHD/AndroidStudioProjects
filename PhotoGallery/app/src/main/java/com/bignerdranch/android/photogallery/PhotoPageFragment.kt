@@ -11,6 +11,7 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import com.bignerdranch.android.photogallery.databinding.FragmentPhotoPageBinding
 
 // this class will be used for showing a web page in the app
@@ -71,8 +72,6 @@ class PhotoPageFragment : Fragment() {
 
             }
         }
-
-
         return binding.root
     }
 }

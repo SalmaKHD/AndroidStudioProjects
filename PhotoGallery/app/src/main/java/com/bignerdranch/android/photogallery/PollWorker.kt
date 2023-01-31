@@ -20,6 +20,7 @@ class PollWorker (
         val photoRepository = PhotoRepository()
         val query = preferencesRepository.storedQuery.first()
         val lastId = preferencesRepository.lastResultId.first()
+
         if (query.isEmpty()) {
             Log.i(TAG, "No saved query, finishing early.")
             return Result.success()
