@@ -12,6 +12,6 @@ In this version, the app description in the "About" section is implemented.
 ![DragAndDraw-v.1](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/DragAndDraw/app-pictures/DragAndDraw-v.1.1.PNG?raw=true))
 
 ### v.2
-In this version, the app preserves the UI state upon configuration changes by keeping a local repository that persists during the execution of the program (this feature was not part of the original app in the aforementioned book).
+In this version, the app preserves the UI state upon configuration changes by keeping a local repository that persists during the execution of the program (this feature was not part of the original app in the aforementioned book). Note that the arrangement of views look different, as absolute coordinates have been used in the main layout file.
 
 ![DragAndDraw-v.2](https://github.com/SalmaKHD/AndroidStudioProjects/blob/main/DragAndDraw/app-pictures/DragAndDraw-v.2.PNG?raw=true)
