@@ -12,6 +12,10 @@ import com.bignerdranch.sunset.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
+    // note: part of challenge
+    // define a variable that will decide which animation must be played now
+    var sunsetAnimatorTurn = true
+
     // define the color of the backgrounds
     private val blueSkyColor: Int by lazy {
         ContextCompat.getColor(this, R.color.blue_sky)
@@ -39,11 +43,11 @@ class MainActivity : AppCompatActivity() {
     // write the function that will start and end the animation
     private fun startAnimation() {
         val sunYStart = binding.sun.top.toFloat()
-        val sunYEnd = binding.sky.height.toFloat()
+        val sunHeight = binding.sky.height.toFloat()
 
         // use an ObjectAnimator instance to join the position of the sun progressively
         val heightAnimator = ObjectAnimator
-            .ofFloat(binding.sun, "y", sunYStart, sunYEnd)
+            .ofFloat(binding.sun, "y", sunYStart, sunHeight)
             .setDuration(3000)
 
         // use an AnimationInterpolator to change how the UI element's properties change over time
@@ -66,14 +70,48 @@ class MainActivity : AppCompatActivity() {
 
         // define an AnimatorSet for running animations in relation
         // to one another
-        val animatorSet = AnimatorSet()
+        val sunsetAnimatorSet = AnimatorSet()
         // heightAnimator: subject of the chain of calls
         // .play() -> a Builder
-        animatorSet.play(heightAnimator)
+        sunsetAnimatorSet.play(heightAnimator)
             .with(sunsetSkyAnimator)
             .before(nightSkyAnimator)
-        // start the animation
-        animatorSet.start()
+
+        // note: part of challenge
+        // add an AnimatorSet that plays the animation in reverse order
+       val nightSkyToSunriseAnimator = ObjectAnimator
+           .ofInt(binding.sky, "backgroundColor", nightSkyColor, sunsetSkyColor)
+           .setDuration(3000)
+        nightSkyToSunriseAnimator.setEvaluator(ArgbEvaluator())
+
+        val sunriseToBlueSkyAnimator =  ObjectAnimator
+            .ofInt(binding.sky, "backgroundColor", sunsetSkyColor, blueSkyColor)
+            .setDuration(1500)
+        sunriseToBlueSkyAnimator.setEvaluator(ArgbEvaluator())
+
+        // Note: ObjectAnimator will not change the original property values of the UI component
+        val sunsetToSunriseSunAnimator = ObjectAnimator
+            .ofFloat(binding.sun, "y", sunHeight+sunYStart, binding.sky.height/2.5f)
+            .setDuration(3000)
+        sunsetToSunriseSunAnimator.interpolator = AccelerateInterpolator()
+
+        val sunriseAnimationSet = AnimatorSet()
+        sunriseAnimationSet.play(nightSkyToSunriseAnimator)
+            .with(sunsetToSunriseSunAnimator)
+            .before(sunriseToBlueSkyAnimator)
+
+        // check which animation must be played now
+        if(sunsetAnimatorTurn)
+            sunsetAnimatorSet.start()
+        else
+            sunriseAnimationSet.start()
+
+        // revert the sunsetAnimatorTurn value to play the other animation
+        sunsetAnimatorTurn = !sunsetAnimatorTurn
+
+
+
+
 
     }
 }
