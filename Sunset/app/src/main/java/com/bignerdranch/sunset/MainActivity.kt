@@ -108,10 +108,5 @@ class MainActivity : AppCompatActivity() {
 
         // revert the sunsetAnimatorTurn value to play the other animation
         sunsetAnimatorTurn = !sunsetAnimatorTurn
-
-
-
-
-
     }
 }
