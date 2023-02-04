@@ -2,53 +2,62 @@ package com.salmakhd.androidlifecycle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.salmakhd.androidlifecycle.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-private const val TAG = "MainActivity"
+private const val TIMER_VALUE = "Timer value"
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityMainBinding
+
+    // create a variable to fetch UI state data
+    private lateinit var viewModel: AndroidLifecycleViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        Log.i(TAG, "onCreate() callback called.")
-        // alternative way
-        Timber.i("onCreate() callback called (Timber-generated).")
-    }
+        // inflate the layout
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-    override fun onStart() {
-        super.onStart()
-        Log.i(TAG, "onStart() callback called")
-        Timber.i("onStart() callback called (Timber generated).")
-    }
+        viewModel = ViewModelProvider(this).get(AndroidLifecycleViewModel::class.java)
 
-    override fun onResume() {
-        super.onResume()
-        Log.i(TAG, "onResume() callback called")
-        Timber.i("onResume() callback called (Timber generated).")
-    }
+        // start the timer or continue from where the user left off before the activity was destructed
+        lifecycleScope.launch {
+            viewModel.uiState.collect {
+                binding.timerTextView.text = viewModel.uiState.value.toString()
+            }
+        }
 
-    override fun onPause() {
-        super.onPause()
-        Log.i(TAG, "onPause() callback called")
-        Timber.i("onPause() callback called (Timber generated).")
-    }
+        // check if the last state of the UI needs to be restored
+        if (savedInstanceState != null) {
+            // fetch the last value of the timer before the app process was killed
+            var timerValue = savedInstanceState?.getInt(TIMER_VALUE) ?: 0
+            // update the value of the timer in the viewModel
+            viewModel.setTimerValue(timerValue)
+        }
 
-    override fun onStop() {
-        super.onStop()
-        Log.i(TAG, "onStop() callback called")
-        Timber.i("onStop() callback called (Timber generated).")
-    }
-    override fun onRestart() {
-        super.onRestart()
-        Log.i(TAG, "onRestart() callback called")
-        Timber.i("onRestart() callback called (Timber generated).")
+        binding.startTimerButton.setOnClickListener {
+            // start the timer
+            viewModel.startTimer()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(TAG, "onDestroy() callback called")
-        Timber.i("onDestroy() callback called (Timber generated).")
+        viewModel.stopTimer()
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(TIMER_VALUE, viewModel.uiState.value)
+        Timber.i("onSaveInstance called: ${viewModel.uiState.value}")
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.putInt(TIMER_VALUE, viewModel.uiState.value)
     }
 }
-
