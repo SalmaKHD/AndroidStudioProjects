@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         // check if the last state of the UI needs to be restored
         if (savedInstanceState != null) {
             // fetch the last value of the timer before the app process was killed
-            var timerValue = savedInstanceState?.getInt(TIMER_VALUE) ?: 0
+            var timerValue = savedInstanceState.getInt(TIMER_VALUE)
+            Timber.i("savedInstance check passed.")
             // update the value of the timer in the viewModel
             viewModel.setTimerValue(timerValue)
         }
@@ -51,13 +52,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.stopTimer()
     }
     override fun onSaveInstanceState(outState: Bundle) {
+        // call to the super class constructor important for saving vital UI data
         super.onSaveInstanceState(outState)
         outState.putInt(TIMER_VALUE, viewModel.uiState.value)
         Timber.i("onSaveInstance called: ${viewModel.uiState.value}")
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState.putInt(TIMER_VALUE, viewModel.uiState.value)
     }
 }
