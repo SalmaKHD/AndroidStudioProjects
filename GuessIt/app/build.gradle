@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId "com.example.android.guesstheword"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }

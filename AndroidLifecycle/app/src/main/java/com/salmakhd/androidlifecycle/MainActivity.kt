@@ -31,16 +31,6 @@ class MainActivity : AppCompatActivity() {
                 binding.timerTextView.text = viewModel.uiState.value.toString()
             }
         }
-
-        // check if the last state of the UI needs to be restored
-        if (savedInstanceState != null) {
-            // fetch the last value of the timer before the app process was killed
-            var timerValue = savedInstanceState.getInt(TIMER_VALUE)
-            Timber.i("savedInstance check passed.")
-            // update the value of the timer in the viewModel
-            viewModel.setTimerValue(timerValue)
-        }
-
         binding.startTimerButton.setOnClickListener {
             // start the timer
             viewModel.startTimer()
@@ -50,11 +40,5 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stopTimer()
-    }
-    override fun onSaveInstanceState(outState: Bundle) {
-        // call to the super class constructor important for saving vital UI data
-        super.onSaveInstanceState(outState)
-        outState.putInt(TIMER_VALUE, viewModel.uiState.value)
-        Timber.i("onSaveInstance called: ${viewModel.uiState.value}")
     }
 }
