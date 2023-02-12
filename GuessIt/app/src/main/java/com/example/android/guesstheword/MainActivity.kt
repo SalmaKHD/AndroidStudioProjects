@@ -17,16 +17,25 @@
 package com.example.android.guesstheword
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.android.guesstheword.screens.game.GameViewModel
+
+private const val TAG = "MainActivity"
 
 /**
  * Creates an Activity that hosts all of the fragments in the app
  */
 class MainActivity : AppCompatActivity() {
+    // add a ViewModel
+    lateinit var viewModel: GameViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-    }
 
+        Log.i(TAG, "Called ViewModelProviders.of")
+        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+    }
 }

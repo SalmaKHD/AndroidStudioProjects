@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 binding.timerTextView.text = viewModel.uiState.value.toString()
             }
         }
+
         binding.startTimerButton.setOnClickListener {
             // start the timer
             viewModel.startTimer()
