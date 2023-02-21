@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.salmakhd.android.jetpackcompose.TipCalculatorTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-21T19:26:54" hostname="DESKTOP-RCGNNSV" time="0.015">
+  <properties/>
+  <testcase name="calculate_20_percent_tip_no_roundUp" classname="com.salmakhd.android.jetpackcompose.TipCalculatorTests" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
