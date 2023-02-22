@@ -94,8 +94,8 @@ fun HomeScreen() {
                     BottomMenuContent("Music", R.drawable.ic_music),
                     BottomMenuContent("Profile", R.drawable.ic_profile),
                 ),
-               modifier = Modifier
-                   .align(Alignment.BottomCenter)
+               //modifier = Modifier
+                 //  .align(Alignment.BottomCenter)
             )
         }
     }
@@ -436,7 +436,8 @@ fun FeatureItem(
                 contentDescription = feature.title,
                 tint = Color.White,
                 modifier = Modifier
-                    .align(Alignment.BottomStart))
+                    .align(Alignment.BottomStart)
+            )
         }
 
         // define the button in a card
@@ -449,10 +450,10 @@ fun FeatureItem(
                 .clickable {
                     // handle the click
                 }
-                .align(Alignment.BottomEnd)
                 .clip(RoundedCornerShape(10.dp))
                 .background(ButtonBlue)
                 .padding(vertical = 6.dp, horizontal = 15.dp)
+                .align(Alignment.BottomEnd)
         )
     }
 }
