@@ -10,14 +10,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -93,10 +91,9 @@ fun HomeScreen() {
                     BottomMenuContent("Sleep", R.drawable.ic_moon),
                     BottomMenuContent("Music", R.drawable.ic_music),
                     BottomMenuContent("Profile", R.drawable.ic_profile),
-                ),
-               modifier = Modifier
-                   .align(Alignment.BottomCenter)
+                )
             )
+
         }
     }
 }
@@ -117,12 +114,11 @@ fun BottomMenu(
     }
 
     Row (
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
             .background(DeepBlue)
-            .padding(15.dp)
     ) {
         items.forEachIndexed() { index, item ->
             BottomMenuItem(
@@ -164,14 +160,13 @@ fun BottomMenuItem(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
                 .background(if (isSelected) activeHighlightColor else Color.Transparent)
-                .padding(10.dp)
         ) {
             Icon(
                 painter = painterResource(id = item.iconId),
                 contentDescription = item.title,
                 tint = if(isSelected) activeTextColor else inactiveTextColor,
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(2.dp)
             )
         }
 
@@ -327,7 +322,7 @@ fun FeaturedSection(
         LazyVerticalGrid(
             // number of cells in each row
             cells = GridCells.Fixed(2),
-            contentPadding = PaddingValues(start = 7.5.dp, end= 7.5.dp, bottom = 100.dp),
+            contentPadding = PaddingValues(start = 7.5.dp, end= 7.5.dp, bottom = 0.dp),
             modifier = Modifier
                 .fillMaxHeight()
         ) {
@@ -436,7 +431,8 @@ fun FeatureItem(
                 contentDescription = feature.title,
                 tint = Color.White,
                 modifier = Modifier
-                    .align(Alignment.BottomStart))
+                    .align(Alignment.BottomStart)
+            )
         }
 
         // define the button in a card
@@ -446,13 +442,15 @@ fun FeatureItem(
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
+                .padding(vertical = 9.dp, horizontal = 25.dp)
                 .clickable {
                     // handle the click
                 }
-                .align(Alignment.BottomEnd)
                 .clip(RoundedCornerShape(10.dp))
                 .background(ButtonBlue)
+                .align(Alignment.BottomEnd)
                 .padding(vertical = 6.dp, horizontal = 15.dp)
+
         )
     }
 }
