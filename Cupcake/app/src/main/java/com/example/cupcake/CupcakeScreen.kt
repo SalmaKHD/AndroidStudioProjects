@@ -189,8 +189,6 @@ private fun shareOrder(
             context.getString(R.string.new_cupcake_order)
         )
     )
-
-
 }
 
 private fun cancelOrderAndNavigateToStart(
