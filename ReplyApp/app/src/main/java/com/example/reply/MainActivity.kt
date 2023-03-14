@@ -53,3 +53,23 @@ fun ReplyAppPreview() {
         ReplyApp(windowSize = WindowWidthSizeClass.Compact)
     }
 }
+
+// create a preview for medium-sized screens
+@Preview
+@Composable
+fun ReplyAppMediumPreview() {
+    ReplyTheme {
+        ReplyApp(windowSize = WindowWidthSizeClass.Medium)
+    }
+}
+
+// create a preview for large screens
+@Preview
+@Composable
+fun ReplyAppExpandedPreview() {
+    ReplyTheme {
+        ReplyApp(windowSize = WindowWidthSizeClass.Expanded)
+    }
+}
+
+
