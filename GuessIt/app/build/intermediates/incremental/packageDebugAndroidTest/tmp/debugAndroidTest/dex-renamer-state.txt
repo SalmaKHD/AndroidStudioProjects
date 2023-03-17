@@ -1,4 +1,0 @@
-#Tue Feb 07 09:10:33 PST 2023
-base.0=C\:\\Users\\khoda\\Desktop\\GitHub\\GitHub_Local\\AndroidStudioProjects\\GuessIt\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeDexDebugAndroidTest\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
