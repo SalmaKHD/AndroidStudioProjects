@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "applicationId": "com.example.android.guesstheword",
+  "variantType": "BASE_APK",
+  "elements": [
+    {
+      "outputType": {
+        "type": "EXTRACTED_APKS"
+      },
+      "apkData": {
+        "type": "MAIN",
+        "splits": [],
+        "versionCode": -1,
+        "fullName": "",
+        "baseName": "",
+        "dirName": ""
+      },
+      "path": "../../extracted_apks/debug/out",
+      "properties": {}
+    }
+  ]
+}
