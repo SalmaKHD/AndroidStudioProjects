@@ -56,7 +56,6 @@ fun ReplyDetailsScreen(
     BackHandler {
         onBackPressed()
     }
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -66,7 +65,6 @@ fun ReplyDetailsScreen(
         item {
             if (isFullScreen) {
                 ReplyDetailsScreenTopBar(onBackPressed, replyUiState)
-
             }
             ReplyEmailDetailsCard(
                 email = replyUiState.currentSelectedEmail,
