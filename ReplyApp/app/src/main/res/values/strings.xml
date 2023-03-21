@@ -31,5 +31,6 @@
     <string name="move_to_inbox">Move to Inbox</string>
     <string name="navigation_bottom">Navigation Bottom</string>
     <string name="navigation_rail">Navigation Rail</string>
+    <string name="details_screen">Details Screen</string>
 
 </resources>

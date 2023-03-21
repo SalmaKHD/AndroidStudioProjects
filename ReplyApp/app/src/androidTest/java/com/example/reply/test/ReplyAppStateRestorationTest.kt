@@ -2,12 +2,9 @@ package com.example.reply.test
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import com.example.reply.data.local.LocalEmailsDataProvider
 import com.example.reply.ui.ReplyApp
 import org.junit.Rule
@@ -21,6 +18,7 @@ class ReplyAppStateRestorationTest {
 
     // verify an email is still selected in compact form after a configuration change
     @Test
+    @TestCompactWidth
     fun compactDevice_selectedEmailEmailRetained_afterConfigChange() {
         // Setup compact window
         // StateRestorationTester is used for testing a configuration change
@@ -54,7 +52,37 @@ class ReplyAppStateRestorationTest {
         ).assertExists()
         // verify the detailed email is there
         composeTestRule.onNodeWithText(LocalEmailsDataProvider.allEmails[2].body).assertExists()
-
-
     }
+
+    // test configuration changes on expanded screens
+    @Test
+    @TestExpandedWidth
+    fun expandedDevice_selectedEmailEmailRetained_afterConfigChange() {
+        // set up expanded window
+        val stateRestorationTester = StateRestorationTester(composeTestRule)
+        stateRestorationTester.setContent {
+            ReplyApp(WindowWidthSizeClass.Expanded)
+        }
+        // make sure that a third email is displayed on screen
+        composeTestRule.onNodeWithText(LocalEmailsDataProvider.allEmails[2].body)
+            .assertIsDisplayed()
+
+        // click on the third email
+        composeTestRule.onNodeWithText(LocalEmailsDataProvider.allEmails[2].subject)
+            .performClick()
+
+        // Verify that third email is displayed on the details screen
+        composeTestRule.onNodeWithTagForStringId(com.example.reply.R.string.details_screen).onChildren()
+            .assertAny(hasAnyDescendant(hasText(LocalEmailsDataProvider.allEmails[2].body)))
+
+        // Simulate a config change
+        stateRestorationTester.emulateSavedInstanceStateRestore()
+
+        // verify that a third email is displayed after a configuration change
+        composeTestRule.onNodeWithTagForStringId(com.example.reply.R.string.details_screen).onChildren()
+            .assertAny(hasAnyDescendant(hasText(LocalEmailsDataProvider.allEmails[2].body)))
+    }
+
+
+
 }

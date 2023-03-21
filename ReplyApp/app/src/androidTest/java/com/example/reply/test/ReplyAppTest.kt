@@ -14,6 +14,8 @@ class ReplyAppTest {
 
     // test compact screens
     @Test
+    // use annotations to group tests for different screen sizes
+    @TestCompactWidth
     fun compactDevice_verifyUsingBottomNavigation() {
         composeTestRule.setContent{
             ReplyApp(
@@ -30,6 +32,7 @@ class ReplyAppTest {
 
     // test medium screens
     @Test
+    @TestMediumWidth
     fun mediumDevice_verifyUsingNavigationRail() {
         composeTestRule.setContent {
             ReplyApp(windowSize = WindowWidthSizeClass.Medium)
@@ -43,6 +46,7 @@ class ReplyAppTest {
 
     // test expanded screens
     @Test
+    @TestExpandedWidth
     fun expandedDevice_verifyUsingNavigationDrawer() {
         composeTestRule.setContent {
             ReplyApp(
