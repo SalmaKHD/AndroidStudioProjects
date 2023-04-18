@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
@@ -76,18 +77,18 @@ fun ReplyHomeScreen(
         )
     )
 
-    if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
-        && replyUiState.isShowingHomepage
-    ) {
+    // create a variable for testing purposes
+    val navigationDrawerContentDescription = stringResource(R.string.navigation_drawer)
+
+    if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(
             drawerContent = {
-                PermanentDrawerSheet(Modifier.width(240.dp)) {
-                    NavigationDrawerContent(
-                        selectedDestination = replyUiState.currentMailbox,
-                        onTabPressed = onTabPressed,
-                        navigationItemContentList = navigationItemContentList
-                    )
-                }
+                NavigationDrawerContent(
+                    selectedDestination = replyUiState.currentMailbox,
+                    onTabPressed = onTabPressed,
+                    navigationItemContentList = navigationItemContentList,
+                    modifier = Modifier.testTag(navigationDrawerContentDescription)
+                )
             }
         ) {
             ReplyAppContent(
@@ -115,6 +116,7 @@ fun ReplyHomeScreen(
         } else {
             ReplyDetailsScreen(
                 replyUiState = replyUiState,
+                isFullScreen = true,
                 onBackPressed = onDetailScreenBackPressed,
                 modifier = modifier
             )
@@ -155,6 +157,9 @@ private fun ReplyAppContent(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
+    // create a variable for testing purposes
+    val navigationRailContentDescription = stringResource(R.string.navigation_rail)
+
     // wrap the new contents in a row for better organization
     Row(modifier = modifier.fillMaxSize()) {
         // show the navigation rail only if the size of the screen matches
@@ -162,7 +167,8 @@ private fun ReplyAppContent(
             ReplyNavigationRail(
                 currentTab = replyUiState.currentMailbox,
                 onTabPressed = onTabPressed,
-                navigationItemContentList = navigationItemContentList
+                navigationItemContentList = navigationItemContentList,
+                modifier = Modifier.testTag(navigationRailContentDescription)
             )
         }
 
@@ -180,16 +186,20 @@ private fun ReplyAppContent(
             } else {
                 ReplyListOnlyContent(
                     replyUiState = replyUiState,
-                    onEmailCardPressed = onEmailCardPressed
+                    onEmailCardPressed = onEmailCardPressed,
+                    modifier = Modifier.weight(1f)
                 )
             }
 
+            // will be used for testing
+            val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
             // show the bottom navigation bar only if the size of the screen matches
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 ReplyBottomNavigationBar(
                     currentTab = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
-                    navigationItemContentList = navigationItemContentList
+                    navigationItemContentList = navigationItemContentList,
+                    modifier= Modifier.testTag(bottomNavigationContentDescription)
                 )
             }
         }

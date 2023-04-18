@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
@@ -56,9 +57,9 @@ fun ReplyDetailsScreen(
     BackHandler {
         onBackPressed()
     }
-
     LazyColumn(
         modifier = modifier
+            .testTag(stringResource(id = R . string . details_screen))
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.inverseOnSurface)
             .padding(top = 24.dp)
@@ -66,7 +67,6 @@ fun ReplyDetailsScreen(
         item {
             if (isFullScreen) {
                 ReplyDetailsScreenTopBar(onBackPressed, replyUiState)
-
             }
             ReplyEmailDetailsCard(
                 email = replyUiState.currentSelectedEmail,
