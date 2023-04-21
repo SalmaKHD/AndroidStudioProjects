@@ -43,7 +43,9 @@ fun MarsPhotosApp(modifier: Modifier = Modifier) {
                 .padding(it),
             color = MaterialTheme.colors.background
         ) {
-            val marsViewModel: MarsViewModel = viewModel()
+            // create a viewModel using the factory method and pass
+            // the ui state to the UI layer
+            val marsViewModel: MarsViewModel = viewModel(factory = MarsViewModel.Factory)
             HomeScreen(
                 marsUiState = marsViewModel.marsUiState
             )
