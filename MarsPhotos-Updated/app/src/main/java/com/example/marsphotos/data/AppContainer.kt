@@ -27,7 +27,7 @@ class DefaultAppContainer: AppContainer {
 
     // since calls to the build() function on Retofit objects are expensive, create a singleton and
     // create a single Retrofit object once only
-    private val retrofitService : MarsApiService by lazy {
+    private val retrofitService: MarsApiService by lazy {
         // create a retrofit object using the create() method and passing the API
         // Retrofit will use to communicate with the backend server (JSON responses
         // converted to Kotlin strings using the Retrofit Scalars library
