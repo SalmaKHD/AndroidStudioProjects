@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Amphibians</string>
+    <string name="app_name">AmphibiansApp</string>
     <string name="amphibian_image_description">amphibian</string>
     <string name="loading_image_description">loading</string>
 </resources>
