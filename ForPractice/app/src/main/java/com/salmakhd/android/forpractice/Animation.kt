@@ -1,3 +1,6 @@
+/**
+ * INCOMPLETE
+ */
 /*
 Topic of investigation: Animation in Compose
  */
