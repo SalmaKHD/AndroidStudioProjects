@@ -16,6 +16,7 @@
 
 package com.example.bluromatic.workers
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -50,6 +51,7 @@ private const val TAG = "WorkerUtils"
  * @param message Message shown on the notification
  * @param context Context needed to create Toast
  */
+@SuppressLint("MissingPermission")
 fun makeStatusNotification(message: String, context: Context) {
 
     // Make a channel if necessary
