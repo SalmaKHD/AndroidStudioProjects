@@ -12,6 +12,7 @@ import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Preview
@@ -101,8 +103,10 @@ fun AnimationDemo() {
     AnimatedContent(
         modifier = Modifier.draggable(
             orientation = Orientation.Vertical,
-            state = DraggableState {
+            state = rememberDraggableState {
+                if (it > 0)
                 minutes++
+                else minutes--
             }
         ),
         targetState = minutes) { targetState ->
@@ -130,6 +134,6 @@ fun AnimationDemo() {
             )
         }
     ) { targetCount ->
-        Text(text = "$targetCount")
+        Text(text = "$targetCount", fontSize = 40.sp)
     }
 }
