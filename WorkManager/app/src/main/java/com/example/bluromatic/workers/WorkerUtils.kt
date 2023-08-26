@@ -53,7 +53,6 @@ private const val TAG = "WorkerUtils"
  */
 @SuppressLint("MissingPermission")
 fun makeStatusNotification(message: String, context: Context) {
-
     // Make a channel if necessary
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         // Create the NotificationChannel, but only on API 26+ because
