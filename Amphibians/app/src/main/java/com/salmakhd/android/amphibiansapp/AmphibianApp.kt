@@ -14,7 +14,8 @@ import com.salmakhd.android.amphibiansapp.ui.AmphibiansScreen
 fun AmphibianApp(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.appname)) }) }
+        topBar = { TopAppBar(title = { Text("Amphibians") }) }
+
     ) {
         Surface(
             modifier = Modifier

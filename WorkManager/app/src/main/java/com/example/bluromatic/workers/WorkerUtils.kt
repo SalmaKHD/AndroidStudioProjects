@@ -23,6 +23,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.os.Trace
 import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
@@ -113,6 +114,7 @@ fun writeBitmapToFile(applicationContext: Context, bitmap: Bitmap): Uri {
     if (!outputDir.exists()) {
         outputDir.mkdirs() // should succeed
     }
+    Trace.beginSection("dd")
     val outputFile = File(outputDir, name)
     var out: FileOutputStream? = null
     try {

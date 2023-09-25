@@ -20,6 +20,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.os.Trace
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.bluromatic.ui.BluromaticScreen
@@ -27,9 +28,11 @@ import com.example.bluromatic.ui.BluromaticScreen
 class BlurActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Trace.beginSection("MAINNNNNNNNNNNN")
         setContent {
             BluromaticScreen()
         }
+        Trace.endSection()
     }
 }
 

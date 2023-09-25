@@ -1,0 +1,78 @@
+{
+  ConstraintSets: {
+    start: {
+      my_image: {
+        width: 45,
+        height: 45,
+        top: ['parent', 'top', 8],
+        start: ['back_icon', 'end', 8]
+      },
+      back_icon: {
+        width: 45,
+        height: 45,
+        start: ['parent', 'start', 8],
+        top: ['parent', 'top', 12]
+      },
+      text: {
+        start: ['my_image', 'end', 8],
+        top: ['my_image', 'top'],
+        bottom: ['my_image', 'bottom'],
+        custom: {
+          text_color: "#FFFFFFFF"
+        }
+      },
+      share_icon: {
+        width: 0,
+        height: 0,
+        end: ['parent', 'end', 8],
+        top: ['parent', 'top', 8]
+
+      }
+    },
+    end: {
+      my_image: {
+        width: 200,
+        height: 200,
+        top: ['parent', 'top', 40],
+        end: ['parent', 'end'],
+        start: ['parent', 'start', 8]
+      },
+      back_icon: {
+        width: 45,
+        height: 45,
+        start: ['parent', 'start', 8],
+        top: ['my_image', 'bottom', 8]
+      },
+      text: {
+        start: ['back_icon', 'end', 8],
+        top: ['back_icon', 'top'],
+        bottom: ['back_icon', 'bottom'],
+        custom: {
+          text_color: "#FF0000"
+        }
+      },
+      share_icon: {
+        width: 35,
+        height: 35,
+        end: ['parent', 'end', 8],
+        top: ['my_image', 'bottom', 8]
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      pathMotionArc: 'startHorizontal',
+      KeyFrames: {
+        KeyAttributes: [{
+          target: ['text'],
+          frames: [0, 10, 30, 50, 100],
+          translationX: [0, 120, 250, 350, 0],
+          rotationZ: [0, 30, 60, 180, 0
+          ]
+        }],
+      }
+    }
+  }
+}
