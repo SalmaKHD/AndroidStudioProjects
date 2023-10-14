@@ -1,3 +1,4 @@
+
 package com.salmakhd.forpracticelocal
 
 import android.content.Context
@@ -20,7 +21,7 @@ import java.util.Locale
 
 const val CREATE_DOCUMENT_REQUEST_CODE = 10000
 const val NIRVANA_REPORT_DIR_NAME = "Nirvana Report"
-class DocumentManager constructor(): ComponentActivity() {
+class DocumentManagerOld constructor(): ComponentActivity() {
     var treeUri: String? = null
     private val dateFormatter = SimpleDateFormat(
         "yyyy.MM.dd 'at' HH:mm:ss z",
@@ -60,7 +61,9 @@ class DocumentManager constructor(): ComponentActivity() {
     }
 
     private suspend fun writeViaTree(fileName: String) =
-        ""?.toUriOrNullIfNoPermission()?.createFileInTree(fileName) ?: openSAFDocumentTreeLauncher(fileName).launch(
+        ""?.toUriOrNullIfNoPermission()?.createFileInTree(fileName) ?: openSAFDocumentTreeLauncher(
+            fileName
+        ).launch(
             null
         )
 
@@ -85,14 +88,15 @@ class DocumentManager constructor(): ComponentActivity() {
         }
 
     private suspend fun Uri.createFileInTree(fileName: String) = withContext(Dispatchers.IO) {
-        val dir = DocumentFile.fromTreeUri(this@DocumentManager, this@createFileInTree)
+        val dir = DocumentFile.fromTreeUri(this@DocumentManagerOld, this@createFileInTree)
             ?: throw RuntimeException("Error loading ${this@createFileInTree}")
         val nirvanaDir = dir.findFile("Nirvana Report") ?: dir.createDirectory("Nirvana Report")
         ?: throw RuntimeException("Error loading ${this@createFileInTree}")
 
-        val file = nirvanaDir.createFile("application/pdf", fileName) ?: throw RuntimeException("Could not create $fileName")
-        contentResolver.openOutputStream(file.uri)?.use {outputStream ->
-            PrintWriter(outputStream).use{pw->
+        val file = nirvanaDir.createFile("application/pdf", fileName)
+            ?: throw RuntimeException("Could not create $fileName")
+        contentResolver.openOutputStream(file.uri)?.use { outputStream ->
+            PrintWriter(outputStream).use { pw ->
                 pw.print("trtrtrtrtrtrtrtrrtrt")
             } ?: throw RuntimeException("Could not open output stream for ${file.uri}")
             dumpSAFTree()
@@ -102,11 +106,13 @@ class DocumentManager constructor(): ComponentActivity() {
 
     private suspend fun dumpSAFTree() = withContext(Dispatchers.IO) {
         val uri = Uri.parse(requireNotNull(treeUri))
-        val dir = DocumentFile.fromTreeUri(this@DocumentManager, uri) ?: throw RuntimeException("")
+        val dir =
+            DocumentFile.fromTreeUri(this@DocumentManagerOld, uri) ?: throw RuntimeException("")
 
         val nirvanaDirectory = dir.findFile(NIRVANA_REPORT_DIR_NAME) ?: throw RuntimeException("")
         nirvanaDirectory.listFiles().joinToString("\n") { it.name ?: "(no name)" }
     }
+}
 
 //
 //    fun fff() {
@@ -130,7 +136,6 @@ class DocumentManager constructor(): ComponentActivity() {
 //        }
 //
 //    }
-}
 
 /*
 val outputDirectory = File(applicationContext.filesDir, OUTPUT_PATH)
