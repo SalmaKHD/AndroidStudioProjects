@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/add_contact"
+            android:title="Add new Contact"
+            android:icon="@drawable/ic_add_contact"/>
+        <item android:id="@+id/setting"
+            android:title="settings"
+            android:icon="@mipmap/ic_settings"/>
+
+        <item android:id="@+id/music"
+            android:title="music"
+            android:icon="@mipmap/ic_music"/>
+
+        <item android:id="@+id/profile"
+            android:title="profile"
+            android:icon="@mipmap/ic_profile"/>
+
+        <item android:id="@+id/calender"
+            android:title="calender"
+            android:icon="@mipmap/ic_calender"/>
+    </group>
+</menu>

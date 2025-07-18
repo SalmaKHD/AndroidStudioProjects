@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="pdf_surface_color">#FFF2F2F2</color>
+    <color name="colorAccent">#FF000000</color>
+    <color name="purple_Dark">#420BA5</color>
+    <color name="purple_light">#8864C8</color>
+    <color name="grey">#E9E9E9</color>
+</resources>

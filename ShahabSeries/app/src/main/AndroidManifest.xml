@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ShahabSeries"
+        tools:targetApi="31">
+        <activity
+            android:name=".instagram.MainInstagramActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.salmakhd.android.rxjava.RxJavaDemonstration"
+            android:exported="false" />
+        <activity
+            android:name=".viewpager.ViewPagerActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".cityapplication.activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cityapplication.activities.CityActivity"
+            android:exported="true" />
+        <activity
+            android:name=".navigationapplication.NavigationActivity"
+            android:exported="true"
+            android:resizeableActivity="false" />
+
+        <service
+            android:name=".navigationapplication.SenfiService"
+            android:exported="false" />
+
+        <activity
+            android:name=".tictactoe.IntroActivity"
+            android:exported="true" />
+        <activity
+            android:name=".tictactoe.TicTacToeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".projectone.FirstActivity"
+            android:exported="false" />
+        <activity
+            android:name=".projectone.SecondActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

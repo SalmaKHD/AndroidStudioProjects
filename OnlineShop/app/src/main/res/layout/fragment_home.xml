@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+        name = "helloText"
+        type="String"/>
+        <variable
+            name="homeFragmentViewModel"
+            type="com.salmakhd.android.onlineshop.HomeFragmentViewModel" />
+    </data>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".HomeFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <com.google.android.material.search.SearchBar
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<!--        Two way data binding-->
+<!--        android:text="@={homeFragmentViewModel._helloTextWord}"-->
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "@{String.valueOf(homeFragmentViewModel.helloText)}"
+            android:onClick="@{()->homeFragmentViewModel.textClickListener()}"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/home_cafe"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        app:tabMode="scrollable"
+        android:id="@+id/cafe_item_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Coffee" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="None Coffee"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Pastry"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/my_view_pager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1" />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cafe_items_recycler_view"
+            tools:listitem="@layout/cafe_item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
+</FrameLayout>
+</layout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tictactoe.IntroActivity"
+    android:gravity="center"
+    android:background="@drawable/bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="player 1 Name: "
+        style="@style/ShapeAppearance.Material3.Corner.Large"
+        />
+
+    <EditText
+        android:id="@+id/player_one_edit"
+        android:layout_margin="5dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/edit_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ShapeAppearance.Material3.Corner.Large"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="player 2 Name: "
+        android:singleLine="true"
+        android:maxLength="20"
+        style="@style/ShapeAppearance.Material3.Corner.Large"
+        />
+
+    <EditText
+        android:id="@+id/player_two_edit"
+        android:background="@drawable/edit_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:maxLength="20"
+        style="@style/ShapeAppearance.Material3.Corner.Large"/>
+
+    <Button
+        android:id="@+id/start"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start!"
+        style="@style/ShapeAppearance.Material3.Corner.Large"
+        android:background="@drawable/btn_bg"/>
+</LinearLayout>
